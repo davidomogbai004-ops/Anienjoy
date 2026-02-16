@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AniEnjoy - Download</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner.active {
+            display: inline-block;
+        }
+
+        .version-info {
+            text-align: center;
+            color: #666;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .install-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .install-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .install-steps {
+            text-align: left;
+        }
+
+        .install-steps li {
+            margin-bottom: 12px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .status.error {
+            color: #e74c3c;
+        }
+
+        .status.success {
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">📱</div>
+            <h1>AniEnjoy</h1>
+            <p>Your favorite anime, manga, and novels in one app</p>
+        </div>
+
+        <div class="content">
+            <div class="download-section">
+                <button class="download-btn" id="downloadBtn">
+                    <span class="spinner" id="spinner"></span>
+                    <span id="btnText">⬇️ Download APK</span>
+                </button>
+                <div class="version-info">
+                    Latest version: <span id="versionText">Loading...</span>
+                </div>
+                <div class="status" id="status"></div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <h3>📚 Manga</h3>
+                    <p>Read unlimited manga and manhwa</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎬 Anime</h3>
+                    <p>Stream your favorite anime series</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📖 Novels</h3>
+                    <p>Discover light novels and web novels</p>
+                </div>
+            </div>
+
+            <div class="install-section">
+                <h2>Installation Steps</h2>
+                <ol class="install-steps">
+                    <li><strong>Method 1: Direct Download</strong>
+                        <div class="code-block">Click the download button above to get the latest APK</div>
+                    </li>
+                    <li><strong>Method 2: Using Terminal</strong>
+                        <div class="code-block">curl -sSL https://raw.githubusercontent.com/davidomogbai004-ops/Anienjoy/main/download.sh | bash</div>
+                    </li>
+                    <li><strong>After downloading:</strong>
+                        <div class="code-block">Enable "Unknown Sources" in Settings → Security</div>
+                    </li>
+                    <li><strong>Install the APK:</strong>
+                        <div class="code-block">Open the downloaded APK file and tap "Install"</div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>AniEnjoy © 2026 | Download and enjoy your favorite content</p>
+        </div>
+    </div>
+
+    <script>
+        const downloadBtn = document.getElementById('downloadBtn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const versionText = document.getElementById('versionText');
+        const statusDiv = document.getElementById('status');
+
+        // Fetch latest version from GitHub API
+        async function fetchLatestVersion() {
+            try {
+                const response = await fetch('https://api.github.com/repos/davidomogbai004-ops/Anienjoy/releases/latest');
+                if (!response.ok) throw new Error('No releases found');
+                
+                const data = await response.json();
+                versionText.textContent = data.tag_name || 'Latest';
+                
+                return data.assets.find(asset => asset.name === 'app-release.apk')?.browser_download_url;
+            } catch (error) {
+                console.error('Error fetching version:', error);
+                versionText.textContent = 'Latest';
+                statusDiv.textContent = '⚠️ Could not fetch latest version';
+                statusDiv.className = 'status error';
+                return null;
+            }
+        }
+
+        downloadBtn.addEventListener('click', async function() {
+            spinner.classList.add('active');
+            btnText.textContent = ' Fetching download...';
+            statusDiv.textContent = '';
+            
+            try {
+                const downloadUrl = await fetchLatestVersion();
+                
+                if (downloadUrl) {
+                    statusDiv.textContent = '✅ Download starting...';
+                    statusDiv.className = 'status success';
+                    
+                    // Trigger download
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = 'app-release.apk';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } else {
+                    statusDiv.textContent = '❌ Download link not found';
+                    statusDiv.className = 'status error';
+                }
+            } catch (error) {
+                console.error('Download error:', error);
+                statusDiv.textContent = '❌ Download failed. Please try again.';
+                statusDiv.className = 'status error';
+            } finally {
+                spinner.classList.remove('active');
+                btnText.textContent = '⬇️ Download APK';
+            }
+        });
+
+        // Load version on page load
+        window.addEventListener('load', fetchLatestVersion);
+    </script>
+</body>
+</html>
